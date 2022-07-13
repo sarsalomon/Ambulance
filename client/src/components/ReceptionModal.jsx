@@ -12,7 +12,7 @@ const ReceptionModal = observer(({show, onHide, id, whoAdd, title}) => {
     const [house, setHouse] = useState('');
     const [apartments, setApartments] = useState([]);
     const [apartment, setApartment] = useState('');
-
+    
     useEffect(() => {
         if(id !== ''){
             fetchHouse(id).then(data => setHouses(data));
@@ -21,11 +21,11 @@ const ReceptionModal = observer(({show, onHide, id, whoAdd, title}) => {
 
   
     useEffect(() => {
-        if(house !== ''){
-            fetchApartment(house).then(data => setApartments(data));
+        if(house !== '' && id !== ''){
+            fetchApartment(id, house).then(data => setApartments(data));
             fetchDriver().then(data => setDrivers(data));
         }
-    }, [house]);
+    }, [house, id]);
 
 
     const callAdd = async () => {

@@ -40,7 +40,6 @@ const SideSchema = new Schema({
 
 const HouseSchema = new Schema({
     districtId:{type:String},
-    neighborhoodId:{type:String},
     objectId:{type:String},
     entranceCount:{type:String},
     floorCount:{type:String},
@@ -56,7 +55,6 @@ const HouseSchema = new Schema({
 
 const ApartmentSchema = new Schema({
     districtId:{type:String},
-    neighborhoodId:{type:String},
     objectId:{type:String},
     houseId:{type:String},
     entranceId:{type:String},
@@ -69,7 +67,6 @@ const ApartmentSchema = new Schema({
 
 const PeopleSchema = new Schema({
     districtId:{type:String},
-    neighborhoodId:{type:String},
     objectId:{type:String},
     houseId:{type:String},
     entranceId:{type:String},
@@ -138,7 +135,6 @@ const ShiftSchema = new Schema({
 
 const CallSchema = new Schema({
     districtId:{type:String},
-    neighborhoodId:{type:String},
     objectId:{type:String},
     houseId:{type:String},
     apartmentId:{type:String},
@@ -169,7 +165,6 @@ const CallSchema = new Schema({
 
 const CallHistorySchema = new Schema({
     districtId:{type:String},
-    neighborhoodId:{type:String},
     objectId:{type:String},
     houseId:{type:String},
     apartmentId:{type:String},

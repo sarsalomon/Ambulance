@@ -33,7 +33,7 @@ class apartmentController {
     async fetchApartment(req, res, next){
         const { districtId, houseId, objectId } = req.body;
         // console.log(req.body)
-        if (!districtId && !objectId && !houseId) {
+        if (!districtId && !houseId && !objectId) {
             const fetchA = await model.apartment.find().sort({ _id: -1});
             // console.log(fetchA)
             let data = []
@@ -104,8 +104,8 @@ class apartmentController {
                 data.push(obj)
             }
             return res.json(data);
-        } else if (districtId && !objectId && !houseId) {
-            const fetchA = await model.apartment.find({territoryId}).sort({ _id: -1});
+        } else if (districtId && !houseId && !houseId) {
+            const fetchA = await model.apartment.find({districtId}).sort({ _id: -1});
             // console.log(fetchA)
             let data = []
             for (let i = 0; i < fetchA.length; i++ ){
@@ -176,7 +176,7 @@ class apartmentController {
             }
             return res.json(data);
         } else if (districtId && objectId && !houseId) {
-            const fetchA = await model.apartment.find({territoryId, districtId}).sort({ _id: -1});
+            const fetchA = await model.apartment.find({districtId, objectId}).sort({ _id: -1});
             // console.log(fetchA)
             let data = []
             for (let i = 0; i < fetchA.length; i++ ){
@@ -246,8 +246,79 @@ class apartmentController {
                 data.push(obj)
             }
             return res.json(data);
-        } else if (districtId && objectId && houseId) {
-            const fetchA = await model.apartment.find({territoryId, districtId, cityorvillageId}).sort({ _id: -1});
+        }  else if (districtId && houseId && !objectId) {
+            const fetchA = await model.apartment.find({districtId, houseId}).sort({ _id: -1});
+            // console.log(fetchA)
+            let data = []
+            for (let i = 0; i < fetchA.length; i++ ){
+                let idDistrict = fetchA[i].districtId;
+                let idEntrance = fetchA[i].entranceId;
+                let idFloor = fetchA[i].floorId;
+                let idSide = fetchA[i].sideId;
+                let idObject = fetchA[i].objectId;
+                let idHouse = fetchA[i].houseId;
+                const findTitleDistrict = await model.district.findById(idDistrict);
+                const findTitleEntrance = await model.entrance.findById(idEntrance);
+                const findTitleFloor = await model.floor.findById(idFloor);
+                const findSide = await model.side.findById(idSide);
+                const findObject = await model.object.findById(idObject);
+                const findHouse = await model.house.findById(idHouse);
+    
+                let districtTitle = ''
+                if (!findTitleDistrict || findTitleDistrict == undefined || findTitleDistrict == null || findTitleDistrict == ''){
+                    districtTitle = ''
+                }else{
+                    districtTitle = findTitleDistrict.title
+                }
+    
+                let entranceTitle = ''
+                if (!findTitleEntrance || findTitleEntrance == undefined || findTitleEntrance == null || findTitleEntrance == ''){
+                    entranceTitle = ''
+                }else{
+                    entranceTitle = findTitleEntrance.title
+                }
+    
+                let floorTitle = ''
+                if (!findTitleFloor || findTitleFloor == undefined || findTitleFloor == null || findTitleFloor == ''){
+                    floorTitle = ''
+                }else{
+                    floorTitle = findTitleFloor.title
+                }
+    
+                let sideTitle = ''
+                if (!findSide || findSide == undefined || findSide == null || findSide == ''){
+                    sideTitle = ''
+                }else{
+                    sideTitle = findSide.title
+                }
+    
+                let objectTitle = ''
+                if (!findObject || findObject == undefined || findObject == null || findObject == ''){
+                    objectTitle = ''
+                }else{
+                    objectTitle = findObject.title
+                }
+    
+                let houseTitle = ''
+                if (!findHouse || findHouse == undefined || findHouse == null || findHouse == ''){
+                    houseTitle = ''
+                }else{
+                    houseTitle = findHouse.title
+                }
+    
+                let obj = JSON.stringify(fetchA[i])
+                obj = JSON.parse(obj)
+                obj["districtTitle"] = `${districtTitle}`;
+                obj["entranceTitle"] = `${entranceTitle}`;
+                obj["floorTitle"] = `${floorTitle}`;
+                obj["sideTitle"] = `${sideTitle}`;
+                obj["objectTitle"] = `${objectTitle}`;
+                obj["houseTitle"] = `${houseTitle}`;
+                data.push(obj)
+            }
+            return res.json(data);
+        } else if (districtId && houseId && objectId) {
+            const fetchA = await model.apartment.find({districtId, houseId, objectId}).sort({ _id: -1});
             // console.log(fetchA)
             let data = []
             for (let i = 0; i < fetchA.length; i++ ){

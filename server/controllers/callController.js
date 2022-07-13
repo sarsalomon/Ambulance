@@ -4,8 +4,8 @@ const model = require('../module/module');
 
 class callController {
     async addCall(req, res, next){
-        const { territoryId, cityorvillageId, districtId, neighborhoodId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId, operatorId, driverId, latitude, longitude, type } = req.body;
-        console.log(req.body)
+        const { districtId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId, operatorId, driverId, latitude, longitude, type } = req.body;
+        // console.log(req.body)
         if (!operatorId) {
             return next(ApiError.badRequest('Operator tanlanmadi'));
         } else if (!apartmentId && type != 3) {
@@ -17,11 +17,11 @@ class callController {
         if (type == 1) {
             const getApartment = await model.apartment.findById({_id:apartmentId}).sort({ _id: -1 });
             if (getApartment) {
-                const condidateC = await model.call.findOne({territoryId, cityorvillageId, districtId, neighborhoodId, streetId, houseId, apartmentId, entranceId:getApartment.entranceId, floorId:getApartment.floorId, sideId:getApartment.sideId, peopleId}).sort({ _id: -1 });
+                const condidateC = await model.call.findOne({districtId, streetId, houseId, apartmentId, entranceId:getApartment.entranceId, floorId:getApartment.floorId, sideId:getApartment.sideId, peopleId}).sort({ _id: -1 });
                 if (condidateC) {
                     return next(ApiError.badRequest('Boshqa Tez Tibbiy Yordam Bemorga yuborildi'));
                 } else { 
-                    const condidate = await model.call.findOne({territoryId, cityorvillageId, districtId, neighborhoodId, streetId, houseId, apartmentId, entranceId:getApartment.entranceId, floorId:getApartment.floorId, sideId:getApartment.sideId, peopleId, driverId}).sort({ _id: -1 });
+                    const condidate = await model.call.findOne({districtId, streetId, houseId, apartmentId, entranceId:getApartment.entranceId, floorId:getApartment.floorId, sideId:getApartment.sideId, peopleId, driverId}).sort({ _id: -1 });
         
                     if (condidate) {
                         return next(ApiError.badRequest('Tez Tibbiy Yordam Manzilga yuborildi'));
@@ -63,17 +63,14 @@ class callController {
                             } else {
                                 const fetchHouse = await model.house.findById(houseId);
                                 if (fetchHouse){
-                                    console.log(driverId)
+                                    // console.log(driverId)
                                     const fetchDriverC = await model.call.findById(driverId);
-                                    console.log(fetchDriverC)
+                                    // console.log(fetchDriverC)
                                     if (fetchDriverC != null && fetchDriverC.length > 0) {
                                         const addC = await model.call.create({
-                                            territoryId, 
-                                            cityorvillageId,
                                             districtId, 
-                                            neighborhoodId, 
                                             streetId, 
-                                            houseId, 
+                                            houseId:fetchHouse._id.valueOf(), 
                                             apartmentId,
                                             entranceId:getApartment.entranceId, 
                                             floorId:getApartment.floorId, 
@@ -98,12 +95,9 @@ class callController {
                                         }
                                     } else {
                                         const addC = await model.call.create({
-                                            territoryId, 
-                                            cityorvillageId,
                                             districtId, 
-                                            neighborhoodId, 
                                             streetId, 
-                                            houseId, 
+                                            houseId:fetchHouse._id.valueOf(), 
                                             apartmentId,
                                             entranceId:getApartment.entranceId, 
                                             floorId:getApartment.floorId, 
@@ -139,11 +133,11 @@ class callController {
                 }
                 }
         } else if (type == 2) {
-            const condidateC = await model.call.findOne({territoryId, cityorvillageId, districtId, neighborhoodId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId}).sort({ _id: -1 });
+            const condidateC = await model.call.findOne({districtId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId}).sort({ _id: -1 });
             if (condidateC) {
                 return next(ApiError.badRequest('Boshqa Tez Tibbiy Yordam Bemorga yuborildi'));
             } else {
-                const condidate = await model.call.findOne({territoryId, cityorvillageId, districtId, neighborhoodId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId, driverId}).sort({ _id: -1 });
+                const condidate = await model.call.findOne({districtId, streetId, houseId, apartmentId, entranceId, floorId, sideId, peopleId, driverId}).sort({ _id: -1 });
                 if (condidate) {
                     return next(ApiError.badRequest('Tez Tibbiy Yordam Bemorga yuborildi'));
                 } else {
@@ -183,19 +177,16 @@ class callController {
                             return next(ApiError.badRequest('Hali botni ishga tushirmadi'));
                         } else {
                             const fetchHouse = await model.house.findById(houseId);
-                            console.log(fetchHouse)
+                            // console.log(fetchHouse)
                             if (fetchHouse){
                                 const fetchApartmnet = await model.apartment.findById(apartmentId);
                                 if (fetchApartmnet) {
                                     const fetchDriverC = await model.call.find({driverId});
                                     if (fetchDriverC.length > 0) {
                                         const addC = await model.call.create({
-                                            territoryId, 
-                                            cityorvillageId, 
                                             districtId, 
-                                            neighborhoodId, 
                                             streetId, 
-                                            houseId, 
+                                            houseId:fetchHouse._id.valueOf(), 
                                             apartmentId, 
                                             entranceId:fetchApartmnet.entranceId, 
                                             floorId:fetchApartmnet.floorId, 
@@ -221,12 +212,9 @@ class callController {
                                         }
                                     }else {
                                         const addC = await model.call.create({
-                                            territoryId, 
-                                            cityorvillageId, 
                                             districtId, 
-                                            neighborhoodId, 
                                             streetId, 
-                                            houseId, 
+                                            houseId:fetchHouse._id.valueOf(), 
                                             apartmentId, 
                                             entranceId:fetchApartmnet.entranceId, 
                                             floorId:fetchApartmnet.floorId, 
@@ -265,7 +253,7 @@ class callController {
                 }
             }
         } else if (type == 3) {
-                const condidate = await model.call.findOne({territoryId:"", cityorvillageId:"", districtId:"", neighborhoodId:"", streetId:"", houseId:"", apartmentId:"", entranceId:"", floorId:"", sideId:"", peopleId:"", operatorId:"", driverId}).sort({ _id: -1 });
+                const condidate = await model.call.findOne({districtId:"", streetId:"", houseId:"", apartmentId:"", entranceId:"", floorId:"", sideId:"", peopleId:"", operatorId:"", driverId}).sort({ _id: -1 });
         
                 if (condidate) {
                     return next(ApiError.badRequest('Tez Tibbiy Yordam Manzilga yuborildi'));
@@ -308,10 +296,7 @@ class callController {
                             const fetchDriverC = await model.call.find({driverId});
                             if (fetchDriverC.length > 0) {
                                 const addC = await model.call.create({
-                                    territoryId, 
-                                    cityorvillageId, 
                                     districtId, 
-                                    neighborhoodId, 
                                     streetId, 
                                     houseId, 
                                     apartmentId, 
@@ -339,10 +324,7 @@ class callController {
                                 }
                             } else {
                                 const addC = await model.call.create({
-                                    territoryId, 
-                                    cityorvillageId, 
                                     districtId, 
-                                    neighborhoodId, 
                                     streetId, 
                                     houseId, 
                                     apartmentId, 

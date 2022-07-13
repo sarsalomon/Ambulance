@@ -98,16 +98,16 @@ const DriverView = observer(() => {
             <div className="application">
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>Shopirlar</title>
+                    <title>Haydovchilar</title>
                 </Helmet>
             </div>
             <Container fluid>
-                <h2 className='text-center'>Shopirlar</h2>
+                <h2 className='text-center'>Haydovchilar</h2>
                 <Row>
                     <Form>
                         <Row>
                             <Col md={2} xs={12} className="d-flex align-items-center">
-                                <Link to={MANAGER_ADD_DRIVER_ROUTE}><Button variant='success'>Shopir qo`shish</Button></Link>
+                                <Link to={MANAGER_ADD_DRIVER_ROUTE}><Button variant='success'>Haydovchi qo`shish</Button></Link>
                             </Col>
                             <Col>
                             </Col>

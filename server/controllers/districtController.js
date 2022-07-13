@@ -6,8 +6,8 @@ class districtController {
         let { title } = req.body
         
         let districts
-        if(title.length>1){     
-            districts = await model.district.find({fish: { $regex : '.*'+ title + '.*' }}).sort({ _id: -1 })
+        if(title.length>0){     
+            districts = await model.district.find({title: { $regex : '.*'+ title + '.*' }}).sort({ _id: -1 })
         }
         return res.json(districts)
     }

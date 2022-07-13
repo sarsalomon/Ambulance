@@ -45,7 +45,7 @@ class peopleController {
         } else {
             const findApartment = await model.apartment.findById(apartmentId);
             if (findApartment){
-                console.log(findApartment)
+                // console.log(findApartment)
                 const addP = await model.people.create({
                     territoryId, 
                     cityorvillageId, 

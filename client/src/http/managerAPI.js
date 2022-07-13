@@ -2,8 +2,8 @@ import { $authost } from "./index";
 
 // FETCH
 
-export const fetchApartment = async () => {
-    const {data} = await $authost.post('api/apartment/byid');
+export const fetchApartment = async (districtId, houseId, objectId) => {
+    const {data} = await $authost.post('api/apartment/byid', {districtId, houseId, objectId});
     return data
 }
 
