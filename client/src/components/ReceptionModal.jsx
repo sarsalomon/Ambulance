@@ -24,6 +24,8 @@ const ReceptionModal = observer(({show, onHide, id, whoAdd, title}) => {
         if(house !== '' && id !== ''){
             fetchApartment(id, house).then(data => setApartments(data));
             fetchDriver().then(data => setDrivers(data));
+        } else {
+            setApartments([]);
         }
     }, [house, id]);
 
