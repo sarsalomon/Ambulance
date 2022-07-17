@@ -109,7 +109,7 @@ const DiseaseView = observer(() => {
                         <Row>
                             <Col md={3} xs={12} className="d-flex align-items-center">
                                 <Link to={MANAGER_ADD_DISEASE_ROUTE}><Button variant='success'>Kasallik Toifa</Button></Link>
-                                <Link to={MANAGER_ADD_DISEASEINFO_ROUTE} className="ms-3"><Button variant='success'>Kasallik qo`shish</Button></Link>
+                                <Link to={MANAGER_ADD_DISEASEINFO_ROUTE} className="ms-3"><Button variant='success'>Tashxis qo`shish</Button></Link>
                             </Col>
                             <Col>
                             </Col>

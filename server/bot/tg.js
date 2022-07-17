@@ -225,7 +225,7 @@ async function GetAddress(chatId, msg){
         let idD = fetchDriver._id.valueOf()
         const fetchCall         = await model.call.findOne({send: 1, driverId: idD});
         if (fetchCall) {
-            console.log(`fetchCall: `,fetchCall);
+            // console.log(`fetchCall: `,fetchCall);
             let ids = fetchCall._id.valueOf();
             if (fetchCall.type == 3) {
                 const updateA = await model.call.findByIdAndUpdate(ids, {blatitude:msg.location.latitude, blongitude:msg.location.longitude},{new:true});
@@ -502,19 +502,50 @@ async function SetDiseaseInfo(selectCallId, userId, messageId, chatId, queryId, 
         let id = getDisease._id.valueOf()
         const getDiseaseInfo = await model.diseaseinfo.find({diseaseId:id});
         let diseaseInfoArray = []
-        for (let i = 0; i < getDiseaseInfo.length; i++) {
-            let dT = data.selectDiasesa
-            let diT = getDiseaseInfo[i].title
-            let datainfo = {sd:dT, sdI:diT}
-            diseaseInfoArray.push({
-                text: getDiseaseInfo[i].title,
-                callback_data: JSON.stringify({
-                    type: ACTION_TYPE.DISEASE_INFO,
-                    info: datainfo
-                })            
-            })
+        console.log(getDiseaseInfo.length)
+
+        for (let i = 0; i < getDiseaseInfo.length; i+=2) {
+            if (i != 0){
+                // console.log(i)
+                for (let q = i-2; q < i; q++) {
+                    if (q!= 0){
+                    // diseaseInfoArray.push(keyboard[q/2] = [{'text': keyboard[q]}, {'text': keyboard[q+1]}]);
+                    // console.log('q:'+ q)
+                    let dT = data.selectDiasesa
+                    let diT = getDiseaseInfo[q].title
+                    let diTwo = getDiseaseInfo[q-1].title
+                    let datainfo = {sd:dT, sdI:diT}
+                    let datainfotwo = {sd:dT, sdI:diTwo}
+                    diseaseInfoArray.push([{
+                        text: getDiseaseInfo[q].title,
+                        callback_data: JSON.stringify({
+                            type: ACTION_TYPE.DISEASE_INFO,
+                            info: datainfo
+                        })            
+                    },{
+                        text: getDiseaseInfo[q-1].title,
+                        callback_data: JSON.stringify({
+                            type: ACTION_TYPE.DISEASE_INFO,
+                            info: datainfotwo
+                        })            
+                    }
+                ])
+                }
+            }
         }
-        
+            // let dT = data.selectDiasesa
+            // let diT = getDiseaseInfo[i].title
+            // let datainfo = {sd:dT, sdI:diT}
+
+            // diseaseInfoArray.push({
+            //     text: getDiseaseInfo[i].title,
+            //     callback_data: JSON.stringify({
+            //         type: ACTION_TYPE.DISEASE_INFO,
+            //         info: datainfo
+            //     })            
+            // })
+        }
+        console.log(diseaseInfoArray.length)
         bot.editMessageText(
             `
             Kassalik: ${data.selectDiasesa}\nIltimos Tashxisni aniqroq tanglang 👇🏻\n
@@ -525,9 +556,7 @@ async function SetDiseaseInfo(selectCallId, userId, messageId, chatId, queryId, 
                 force_reply: true,
                 resize_keyboard: true,
                 remove_keyboard: true,
-                inline_keyboard:[
-                    diseaseInfoArray
-                ]
+                inline_keyboard:diseaseInfoArray
             },   
             parse_mode: 'HTML'
         });

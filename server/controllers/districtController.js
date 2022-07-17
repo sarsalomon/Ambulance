@@ -6,8 +6,10 @@ class districtController {
         let { title } = req.body
         
         let districts
-        if(title.length>0){     
-            districts = await model.district.find({title: { $regex : '.*'+ title + '.*' }}).sort({ _id: -1 })
+        if(title.length>1){     
+            districts = await model.district.find({title: { $regex : '.*'+ title + '.*' }}).sort({ title: 1 })
+        } else if (title.length>0) {
+            districts = await model.district.find().sort({ title: 1 })
         }
         return res.json(districts)
     }
@@ -36,35 +38,6 @@ class districtController {
     async fetchAllDistrict(req, res, next){
         const fetchDi = await model.district.find().sort({ _id: -1});
         return res.json(fetchDi);
-        // let data = []
-        // for (let i = 0; i < fetchDi.length; i++ ){
-        //     let idTerritory = fetchDi[i].territoryId;
-        //     let idCityOrVillage = fetchDi[i].cityorvillageId;
-        //     const findTitleTerritory = await model.territory.findById(idTerritory);
-        //     const findTitleCityOrVillage = await model.cityorvillage.findById(idCityOrVillage);
-        //     let obj = JSON.stringify(fetchDi[i])
-
-
-        //     let territoryTitle = ''
-        //     if (!findTitleTerritory || findTitleTerritory == undefined || findTitleTerritory == null || findTitleTerritory == ''){
-        //         territoryTitle = ''
-        //     }else{
-        //         territoryTitle = findTitleTerritory.title
-        //     }
-
-        //     let cityorvillageTitle = ''
-        //     if (!findTitleCityOrVillage || findTitleCityOrVillage == undefined || findTitleCityOrVillage == null || findTitleCityOrVillage == ''){
-        //         cityorvillageTitle = ''
-        //     }else{
-        //         cityorvillageTitle = findTitleCityOrVillage.title
-        //     }
-
-        //     obj = JSON.parse(obj)
-        //     obj["territoryTitle"] = `${territoryTitle}`;
-        //     obj["cityorvillageTitle"] = `${cityorvillageTitle}`;
-        //     data.push(obj)
-        // }
-        // return res.json(data);
     }
 
     async getDistrict(req, res, next){

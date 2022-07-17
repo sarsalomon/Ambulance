@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { addDiseaseInfo, fetchDisease } from '../../../http/managerAPI';
 import { Context } from '../../..';
 import { Link } from 'react-router-dom';
-import { MANAGER_DISTRICT_ROUTE } from '../../../utils/consts';
+import { MANAGER_DISEASE_ROUTE } from '../../../utils/consts';
 
 const DiseaseInfoAdd = observer(() => {
     const {user} = useContext(Context)
@@ -80,7 +80,7 @@ const DiseaseInfoAdd = observer(() => {
             </div>
             <Container>
                 <span className='d-flex justify-content-between'>
-                    <Link to={MANAGER_DISTRICT_ROUTE}><Button className='text-start'>Orqaga qaytish</Button></Link>
+                    <Link to={MANAGER_DISEASE_ROUTE}><Button className='text-start'>Orqaga qaytish</Button></Link>
                     <h2 className='text-center'>Tashxis qo'shish</h2>
                     <span></span>
                 </span>
