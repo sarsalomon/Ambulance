@@ -122,8 +122,21 @@ class diseaseController {
 
     async deleteDisease(req, res, next){
         const {id} = req.body;
-        const deleteD = await model.disease.findByIdAndDelete(id);
-        return res.json(deleteD);
+        const FindA = await model.diseaseinfo.find({diseaseId: id});
+        console.log(FindA)
+        if (FindA.length == 0) {
+            const deleteH = await model.disease.findByIdAndDelete(id);
+            return res.json(deleteH);
+        }else if (!FindA || FindA.length != 0 || FindA != null || FindA != undefined){
+            for (let i = 0; i < FindA.length; i++) {
+                let ids = FindA[i]._id.valueOf();
+                const deleteA = await model.diseaseinfo.findByIdAndDelete(ids);
+                if (i == (FindA.length-1)) {
+                    const deleteH = await model.disease.findByIdAndDelete(id);
+                    return res.json(deleteH);                    
+                }
+            }
+        }
     }
 
     async deleteDiseaseInfo(req, res, next){

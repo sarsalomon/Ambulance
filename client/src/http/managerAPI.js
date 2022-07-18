@@ -376,7 +376,7 @@ export const deleteDisease = async (id) => {
 }
 
 export const deleteDiseaseInfo = async (id) => {
-    const {data} = await $authost.post('api/disease/delete', {id});
+    const {data} = await $authost.post('api/disease/deleteinfo', {id});
     return data
 }
 

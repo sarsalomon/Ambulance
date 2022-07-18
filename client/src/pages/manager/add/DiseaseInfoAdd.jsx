@@ -117,7 +117,7 @@ const DiseaseInfoAdd = observer(() => {
                             {info.map(i =>
                                 <Row className="mt-1" key={i.number}>
                                     <Col>
-                                        <FloatingLabel controlId="floatingInput" label="Kassalik nomi" className="mb-3">
+                                        <FloatingLabel controlId="floatingInput" label="Tashxis nomi" className="mb-3">
                                             <Form.Control
                                                 type="text" 
                                                 placeholder="name@example.com" 
@@ -127,7 +127,7 @@ const DiseaseInfoAdd = observer(() => {
                                         </FloatingLabel>
                                     </Col>
                                     <Col>
-                                        <FloatingLabel controlId="floatingInput" label="Kassalik tarifi" className="mb-3">
+                                        <FloatingLabel controlId="floatingInput" label="Tashxis tarifi" className="mb-3">
                                             <Form.Control
                                                 type="text" 
                                                 as="textarea"
