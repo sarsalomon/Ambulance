@@ -9,8 +9,10 @@ router.post('/infobyid', diseaseController.fetchDiseaseInfo);
 router.post('/add', diseaseController.addDisease);
 router.post('/infoadd', diseaseController.addDiseaseInfo);
 router.post('/update', diseaseController.updateDisease);
+router.post('/updateinfo', diseaseController.updateDiseaseInfo);
 router.post('/delete', diseaseController.deleteDisease);
 router.post('/deleteinfo', diseaseController.deleteDiseaseInfo);
 router.get('/get/:id', diseaseController.getDisease);
+router.get('/getinfo/:id', diseaseController.getDiseaseInfo);
 
 module.exports = router;

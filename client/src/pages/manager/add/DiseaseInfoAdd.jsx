@@ -89,13 +89,13 @@ const DiseaseInfoAdd = observer(() => {
                     <Row>
                         <Col>
                             <Form.Group className="mb-3">
-                                <Form.Label>Kassalik toifasi</Form.Label>
+                                <Form.Label>Kasallik toifasi</Form.Label>
                                 <Form.Select
                                     onChange={(e) => {const seletcedItem = e.target.value
                                         setDiseaseId(seletcedItem);
                                     }}
                                 >  
-                                    <option value={''}>Kassalik</option>
+                                    <option value={''}>Kasallik</option>
                                         {items.map(item =>
                                             <option key={item._id}
                                                 value={item._id} 
@@ -112,7 +112,7 @@ const DiseaseInfoAdd = observer(() => {
                                 onClick={addInfo}
                                 className="mb-3"
                             >
-                                Kassalik qo'shish
+                                Tashxis qo'shish
                             </Button>
                             {info.map(i =>
                                 <Row className="mt-1" key={i.number}>

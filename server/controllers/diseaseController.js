@@ -85,6 +85,12 @@ class diseaseController {
         const getD = await model.disease.findById(id);
         return res.json(getD)
     }
+    
+    async getDiseaseInfo(req, res, next){
+        const {id} = req.params;
+        const getD = await model.diseaseinfo.findById(id);
+        return res.json(getD)
+    }
 
     async updateDisease(req, res, next){
         const {id, title, whoAdd} = req.body
@@ -96,6 +102,20 @@ class diseaseController {
             return next(ApiError.badRequest('Bunaqa nomli Kasallik mavjud'));
         } else {
             const updateD = await model.disease.findByIdAndUpdate(id, {title, whoAdd},{new:true});
+            return res.json(updateD);
+        }
+    }
+    
+    async updateDiseaseInfo(req, res, next){
+        const {id, title, whoAdd} = req.body
+        if (!title) {
+            return next(ApiError.badRequest('Kasallik nomi yozilmagan'));
+        }
+        const titlefind = await model.diseaseinfo.findOne({title});
+        if (titlefind) {
+            return next(ApiError.badRequest('Bunaqa nomli Kasallik mavjud'));
+        } else {
+            const updateD = await model.diseaseinfo.findByIdAndUpdate(id, {title, whoAdd},{new:true});
             return res.json(updateD);
         }
     }

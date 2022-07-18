@@ -236,7 +236,7 @@ export const getDisease = async (id) => {
 }
 
 export const getDiseaseInfo = async (id) => {
-    const {data} = await $authost.get('api/disease/get/' + id);
+    const {data} = await $authost.get('api/disease/getinfo/' + id);
     return data
 }
 
@@ -309,7 +309,7 @@ export const updateDisease = async (info) => {
 }
 
 export const updateDiseaseInfo = async (info) => {
-    const {data} = await $authost.post('api/disease/infoadd/update', info);
+    const {data} = await $authost.post('api/disease/updateinfo', info);
     return data
 }
 
@@ -375,6 +375,11 @@ export const deleteDisease = async (id) => {
     return data
 }
 
+export const deleteDiseaseInfo = async (id) => {
+    const {data} = await $authost.post('api/disease/delete', {id});
+    return data
+}
+
 export const deleteDistrict = async (id) => {
     const {data} = await $authost.post('api/district/delete', {id});
     return data
@@ -397,11 +402,6 @@ export const deleteFloor = async (id) => {
 
 export const deleteHouse = async (id) => {
     const {data} = await $authost.post('api/house/delete', {id});
-    return data
-}
-
-export const deleteNeighborhood = async (id) => {
-    const {data} = await $authost.post('api/neighborhood/delete', {id});
     return data
 }
 

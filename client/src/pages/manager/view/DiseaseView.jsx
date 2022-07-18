@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteDisease, fetchAllDisease } from '../../../http/managerAPI';
-import { MANAGER_ADD_DISEASEINFO_ROUTE, MANAGER_ADD_DISEASE_ROUTE, MANAGER_GET_DISEASE_ROUTE } from '../../../utils/consts';
+import { MANAGER_ADD_DISEASEINFO_ROUTE, MANAGER_ADD_DISEASE_ROUTE, MANAGER_DISEASEINFO_ROUTE, MANAGER_GET_DISEASE_ROUTE } from '../../../utils/consts';
 import Paginations from '../../../components/Paginations';
 
 const DiseaseView = observer(() => {
@@ -102,7 +102,7 @@ const DiseaseView = observer(() => {
                 </Helmet>
             </div>
             <Container fluid>
-                <h2 className='text-center'>Kassalliklar</h2>
+                <h2 className='text-center'>Kasalliklar</h2>
                 <Row className="d-inline">
 
                     <Form>
@@ -143,7 +143,7 @@ const DiseaseView = observer(() => {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Kassalik</th>
+                                    <th>Kasallik</th>
                                     <th>Tashxislar</th>
                                     <th>Harakat</th>
                                 </tr>
@@ -154,7 +154,7 @@ const DiseaseView = observer(() => {
                                         <tr key={item._id}>
                                             <td>{cpi + index + 1}</td>
                                             <td><h5>{item.title}</h5></td>
-                                            <td>{item.departmentName}</td>
+                                            <td><Button variant="primary" onClick={() => history(MANAGER_DISEASEINFO_ROUTE + '/' + item._id)}>Tashxislar ko'rish</Button></td>
                                             <td>
                                                 <Button variant="primary" onClick={() => history(MANAGER_GET_DISEASE_ROUTE + '/' + item._id)}>Yangilash</Button>
                                                 <Button variant="danger" className="ms-2" onClick={() => Diseasedelete(item._id)}>O'chirish</Button>

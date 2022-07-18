@@ -346,7 +346,6 @@ class houseController {
 
     async fetchHouse(req, res, next){
         const { districtId, objectId } = req.body;
-
         if (!districtId && !objectId) {
             const fetchH = await model.house.find().sort({ _id: -1});
             let data = []
@@ -381,7 +380,7 @@ class houseController {
             }
             return res.json(data);
         } else if (districtId && !objectId) {
-            const fetchH = await model.house.find({districtId}).sort({ _id: -1});
+            const fetchH = await model.house.find({districtId}).sort({ title: 1});
             let data = []
             for (let i = 0; i < fetchH.length; i++ ){
                 let idDistrict = fetchH[i].districtId;

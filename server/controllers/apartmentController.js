@@ -247,7 +247,7 @@ class apartmentController {
             }
             return res.json(data);
         }  else if (districtId && houseId && !objectId) {
-            const fetchA = await model.apartment.find({districtId, houseId}).sort({ _id: -1});
+            const fetchA = await model.apartment.find({districtId, houseId}).sort({ _id: 1});
             // console.log(fetchA)
             let data = []
             for (let i = 0; i < fetchA.length; i++ ){
