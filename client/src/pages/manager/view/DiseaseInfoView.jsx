@@ -7,13 +7,12 @@ import { Container, Row, Col, Button, Table, Form  } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { confirmAlert } from 'react-confirm-alert';
 import { MANAGER_DISEASE_ROUTE, MANAGER_GET_DISEASEINFO_ROUTE } from '../../../utils/consts';
-import { deleteDiseaseInfo, fetchAllDiseaseInfo } from '../../../http/managerAPI';
+import { deleteDiseaseInfo, fetchDiseaseInfo } from '../../../http/managerAPI';
 import { Link } from 'react-router-dom';
 
 
 const DiseaseInfoView = observer(() => {
     const {id} = useParams();
-    console.log(id)
     const [allItems, setAllItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -21,10 +20,10 @@ const DiseaseInfoView = observer(() => {
 
     useEffect(()=>{
         // const interval = setInterval(() => {
-            fetchAllDiseaseInfo().then(data => setAllItems(data));
+            fetchDiseaseInfo(id).then(data => setAllItems(data));
         // }, 1000);
         // return () => clearInterval(interval);
-    },[])
+    },[id])
 
     const lastItemIndex = currentPage * itemsPerPage
     const firstItemIndex = lastItemIndex - itemsPerPage
@@ -42,12 +41,13 @@ const DiseaseInfoView = observer(() => {
   />
     }
     
-    const deleteD = async (id) => {
+    const deleteD = async (ids,id) => {
         try{
             let data;
             data = await deleteDiseaseInfo(id)
+            console.log(ids)
             if (data){
-                fetchAllDiseaseInfo().then(data => setAllItems(data));
+                fetchDiseaseInfo(ids).then(data => setAllItems(data));
                 toast.success(`O'chirildi`, {
                     position: "bottom-left",
                     autoClose: 5000,
@@ -72,14 +72,14 @@ const DiseaseInfoView = observer(() => {
     }
 
  
-    const Diseasedelete = (id) => {
+    const Diseasedelete = (ids,id) => {
         confirmAlert({
             title: 'O`chirishni tasdiqlang',
             message: 'Ishonchingiz komilmi Kasallikni o`chirishga?',
             buttons: [
               {
                 label: 'Ha',
-                onClick: () => deleteD(id)
+                onClick: () => deleteD(ids,id)
               },
               {
                 label: 'Yo`q'
@@ -157,7 +157,7 @@ const DiseaseInfoView = observer(() => {
                                         <td><h5>{item.title}</h5></td>
                                         <td>
                                             <Button variant="primary" onClick={() => history(MANAGER_GET_DISEASEINFO_ROUTE + '/' + item._id)}>Yangilash</Button>
-                                            <Button variant="danger" className="ms-2" onClick={() => Diseasedelete(item._id)}>O'chirish</Button>
+                                            <Button variant="danger" className="ms-2" onClick={() => Diseasedelete(id, item._id)}>O'chirish</Button>
                                         </td>
                                     </tr>
                                 )   
