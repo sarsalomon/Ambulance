@@ -42,6 +42,7 @@ const OperatorStatisticsView = observer(() => {
             let data;
             data = await deleteCall(id)
             if (data){
+                fetchStatistic().then(data => setAllItems(data));
                 toast.success(`O'chirildi`, {
                     position: "bottom-right",
                     autoClose: 5000,
